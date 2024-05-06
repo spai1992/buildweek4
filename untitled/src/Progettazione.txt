@@ -1,0 +1,165 @@
+Si vuole realizzare un sistema per la gestione di una compagnia
+di trasporto pubblico.
+≈Occorre realizzare un progetto Java che includa il modello,
+le classi DAO e tutte le infrastrutture necessarie alla gestione della persistenza
+tramite JPA. Occorre inoltre realizzare il database PostgreSQL
+a supporto del modello applicativo.
+Una volta realizzato il modello, implementare dei metodi di test che,
+attraverso main(), permettano di verificare il corretto funzionamento
+ di tutte le funzionalità.
+-------------------------------- PARTE UNO -----------------------------------------------------
+
+Il sistema deve permettere l'emissione dei biglietti,
+sia da distributori automatici che da rivenditori autorizzati,
+oltre che l'emissione di abbonamenti settimanali e
+mensili di tipo nominativo ad utenti dotati di tessera.
+La tessera ha validità annuale e deve essere rinnovata alla scadenza.
+Ogni biglietto ed abbonamento è identificato da un codice univoco.
+Deve essere possibile tenere traccia del numero di
+biglietti e/o abbonamenti emessi in un dato periodo di tempo in totale
+e per punto di emissione. I distributori automatici possono essere attivi
+o fuori servizio. Occorre inoltre permettere la verifica rapida
+della validità di un abbonamento in base al numero di tessera dell'utente controllato.
+
+------------------------ PARTE DUE ---------------------------------------------------------------
+
+Il sistema deve inoltre prevedere la gestione del parco mezzi.
+I mezzi possono essere tram o autobus ed avere una
+certa capienza in base al tipo di mezzo.
+Ogni mezzo può essere in servizio o in manutenzione ed occorre
+tenere traccia dei periodi di servizio o manutenzione di ogni mezzo.
+Quando un biglietto viene vidimato su un mezzo,
+esso deve essere annullato e deve essere possibile acquisire il numero
+di biglietti vidimati su un particolare mezzo o in totale in un periodo di tempo.
+
+------------------------- PARTE TRE ---------------------------------------------------
+
+Ogni mezzo in servizio può essere assegnato ad una tratta,
+che è caratterizzata da una zona di partenza,
+un capolinea ed un tempo medio di percorrenza.
+Occorre tenere traccia del numero di volte che un mezzo percorre
+una tratta e del tempo effettivo di percorrenza di esse.
+
+
+-------------------------> PROGETTO <----------------------------
+
+Struttura delle classi:
+
+Classe Base --> estenderà id a tutte le sotto-classi
+
+Classe Abbonamenti
+
+Classe Biglietti
+
+Classe Emetti --> Classe che distribuisce funzionalità a distributori e rivenditori
+
+- Bisognerà assegnare ai distributori e rivenditori, dei metodi che permettano di avere un contatore dei biglietti emessi,
+  per ogni biglietto bisogna stampare un datenow
+
+- Per controllare se i biglietti o abbonamenti risultano validi, usiamo .plusDate
+
+Classe Distributori --> attributo che definisce se sono attivi o fuori servizio
+
+Classe Rivenditori
+
+Enum con periodicità degli abbonamenti
+
+Classe Utente --> Contiene come valore il numero di tessera
+              --> Nome, Cognome, N. Tessera. Bisogna controllare se l'utente può viaggiare, se ha un biglietto
+              --> con data odierna può viaggiare, se l'abbonamento è valido. Ha una proprietà che definisce se ha la tessera.
+              --> se possiede tessera -> può fare abbonamento.(Controllare se la tesserà è valida per potersi abbonare)
+
+-----------------------------------------------------------------------------------
+
+Attributi delle classi PARTE UNO:
+
+Classe Base : Id
+
+Classe TitoliDiViaggio : (estende Base) dataCreazione, dataScadenza, durataTitolo,
+
+Classe Biglietto: (estenderà titoliDiViaggio) : timbrato boolean;
+
+Classe Abbonamento: (estenderà titoliDiViaggio) : numeroTessera,
+
+Classe Utente: (estende Base) Nome, Cognome,
+
+Classe Tessera:  (estende Base) dataCreazione, Abbonato
+
+
+Classe Biglietto:
+Attributi:
+codiceUnivoco: String (identificatore univoco del biglietto)
+tipo: Enum (tipo di biglietto: singolo, settimanale, mensile)
+dataEmissione: Date
+puntoEmissione: String (identificatore del punto di emissione)
+valido: boolean (indica se il biglietto è valido o annullato)
+Relazioni:
+Molti-a-Uno con DistributoreAutomatico
+Molti-a-Uno con RivenditoreAutorizzato
+
+Classe Abbonamento:
+Attributi:
+codiceUnivoco: String (identificatore univoco dell'abbonamento)
+tipo: Enum (tipo di abbonamento: settimanale, mensile)
+dataEmissione: Date
+dataScadenza: Date
+utente: Utente (riferimento all'utente titolare dell'abbonamento)
+Relazioni:
+Uno-a-Uno con Tessera
+Uno-a-Molti con Biglietto (un abbonamento può essere composto da più biglietti)
+
+Classe Tessera:
+Attributi:
+numero: String (numero identificativo della tessera)
+dataEmissione: Date
+dataScadenza: Date
+Relazioni:
+Uno-a-Molti con Abbonamento
+
+Classe DistributoreAutomatico:
+Attributi:
+id: Long (identificatore univoco del distributore automatico)
+attivo: boolean (indica se il distributore automatico è attivo o fuori servizio)
+Relazioni:
+Uno-a-Molti con Biglietto
+
+Classe RivenditoreAutorizzato:
+Attributi:
+id: Long (identificatore univoco del rivenditore autorizzato)
+Relazioni:
+Uno-a-Molti con Biglietto
+
+Classe Mezzo:
+Attributi:
+targa: String
+tipo: Enum (tipo di mezzo: tram, autobus)
+capienza: int
+inServizio: boolean (indica se il mezzo è in servizio o in manutenzione)
+Relazioni:
+Uno-a-Molti con Tratta
+Uno-a-Molti con VidimazioneBiglietto
+
+Classe Tratta:
+Attributi:
+zonaPartenza: String
+capolinea: String
+tempoMedioPercorrenza: int (in minuti)
+Relazioni:
+Uno-a-Molti con Mezzo
+
+Classe VidimazioneBiglietto:
+Attributi:
+data: Date
+Relazioni:
+Uno-a-Molti con Mezzo
+Uno-a-Uno con Biglietto
+
+Classe Utente:
+Attributi:
+nome: String
+cognome: String
+numeroTessera: String
+Relazioni:
+Uno-a-Molti con Abbonamento
+
+
