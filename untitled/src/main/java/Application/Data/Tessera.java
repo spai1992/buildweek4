@@ -9,12 +9,15 @@ public class Tessera extends BaseEntity {
     private LocalDate dataScadenza;
     private Validita validita;
     private Utente utente;
+    private Abbonamento abbonamento;
 
-    public Tessera(Validita validita, Utente utente) {
+    public Tessera(Validita validita, Utente utente, Abbonamento abbonamento) {
         this.dataCreazione = LocalDate.now();
         this.dataScadenza = dataCreazione.plusDays(365);
         this.validita = validita;
         this.utente = utente;
+        this.abbonamento = abbonamento;
+
     }
 
     public Tessera(){}
