@@ -3,7 +3,7 @@ di trasporto pubblico.
 Occorre realizzare un progetto Java che includa il modello,
 le classi DAO e tutte le infrastrutture necessarie alla gestione della persistenza
 tramite JPA. Occorre inoltre realizzare il database PostgreSQL
- a supporto del modello applicativo.
+a supporto del modello applicativo.
 Una volta realizzato il modello, implementare dei metodi di test che,
 attraverso main(), permettano di verificare il corretto funzionamento
  di tutte le funzionalità.
