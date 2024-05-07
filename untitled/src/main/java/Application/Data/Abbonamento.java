@@ -1,13 +1,20 @@
 package Application.Data;
 
 import Application.Data.Enum.Validita;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
-public class Abbonamento extends TitoloDiViaggio{
 
-    public Abbonamento(LocalDate dataScadenza, Validita validita) {
-        super(dataScadenza, validita);
+@Entity
+@Table(name = "abbonamenti")
+@DiscriminatorValue("abbonamento")
+public class Abbonamento extends TitoloDiViaggio{
+    @OneToOne(mappedBy = "utente", fetch = FetchType.EAGER)
+    private Utente utente;
+
+    public Abbonamento(LocalDate dataScadenza, Validita validita, PuntoVendita puntoVendita) {
+        super(dataScadenza, validita, puntoVendita);
 
     }
 

@@ -1,20 +1,29 @@
 package Application.Data;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "utente")
 public class Utente extends BaseEntity{
+    @Id
+    @GeneratedValue
+    private int numeroTessera;
     private String nome;
     private String cognome;
-    private int numeroTessera;
     private LocalDate creazioneTessera;
     private LocalDate scadenzaTessera;
+    @OneToOne
+    @JoinColumn(name = "abbonamento_id")
+    private Abbonamento abbonamento;
 
-    public Utente(String nome, String cognome, int numeroTessera, LocalDate creazioneTessera) {
+    public Utente(String nome, String cognome, LocalDate creazioneTessera, Abbonamento abbonamento) {
         this.nome = nome;
         this.cognome = cognome;
-        this.numeroTessera = numeroTessera;
         this.creazioneTessera = creazioneTessera;
         scadenzaTessera = creazioneTessera.plusDays(365);
+        this.abbonamento = abbonamento;
     }
 
     public Utente(){}

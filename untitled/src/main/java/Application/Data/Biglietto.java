@@ -1,17 +1,22 @@
 package Application.Data;
 
 import Application.Data.Enum.Validita;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "biglietti")
+@DiscriminatorValue("biglietto")
 public class Biglietto extends TitoloDiViaggio{
     private boolean timbrato = false;
     private LocalDate timbratura;
-    //Many to one
+    @ManyToOne
+    @JoinColumn(name = "mezzo_id")
     private Mezzo mezzo;
 
-    public Biglietto(LocalDate dataCreazione, Validita validita) {
-        super(dataCreazione, validita);
+    public Biglietto(LocalDate dataCreazione, Validita validita, PuntoVendita puntoVendita) {
+        super(dataCreazione, validita,puntoVendita);
     }
 
 

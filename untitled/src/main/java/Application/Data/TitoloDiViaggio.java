@@ -12,9 +12,14 @@ public abstract class TitoloDiViaggio extends BaseEntity {
     private LocalDate dataCreazione;
     private LocalDate dataScadenza;
     private Validita validita;
+    @ManyToOne
+    @JoinColumn(name = "punto_vendita_id")
+    private PuntoVendita puntoVendita;
 
-    public TitoloDiViaggio(LocalDate dataCreazione, Validita validita) {
+
+    public TitoloDiViaggio(LocalDate dataCreazione, Validita validita, PuntoVendita puntoVendita) {
         this.dataCreazione = dataCreazione;
+        this.puntoVendita = puntoVendita;
         this.validita = validita;
         switch (validita){
             case Validita.GIORNALIERO:

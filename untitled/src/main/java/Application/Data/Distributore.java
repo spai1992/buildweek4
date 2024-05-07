@@ -1,11 +1,18 @@
 package Application.Data;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Distributore extends BaseEntity{
+@Entity
+@Table(name = "distributori")
+@DiscriminatorValue("distributore")
+public class Distributore extends PuntoVendita{
     private boolean isActive = true;
-    private List<TitoloDiViaggio> titoli = new ArrayList<>();
 
     public Distributore(){}
 
@@ -21,7 +28,6 @@ public class Distributore extends BaseEntity{
     public String toString() {
         return "Distributore{" +
                 "isActive=" + isActive +
-                ", titoli=" + titoli +
                 '}';
     }
 }

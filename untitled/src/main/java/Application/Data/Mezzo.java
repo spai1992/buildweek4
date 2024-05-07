@@ -1,16 +1,20 @@
 package Application.Data;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "tipo_di_mezzo", discriminatorType = DiscriminatorType.STRING)
 public abstract class Mezzo extends BaseEntity {
 
     private int capienza;
     private boolean inServizio;
     private LocalDate tempoManutenzione;
     private LocalDate tempoServizio;
-    //colegare a biglietti OneToMany
+    @OneToMany(mappedBy = "mezzo")
     private List<Biglietto> biglietti;
     private List<Tratta> tratte;
 
