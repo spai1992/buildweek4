@@ -13,8 +13,8 @@ public abstract class TitoloDiViaggio extends BaseEntity {
     private LocalDate dataScadenza;
     private Validita validita;
 
-    public TitoloDiViaggio(LocalDate dataScadenza, Validita validita) {
-        this.dataCreazione = LocalDate.now();
+    public TitoloDiViaggio(LocalDate dataCreazione, Validita validita) {
+        this.dataCreazione = dataCreazione;
         this.validita = validita;
         switch (validita){
             case Validita.GIORNALIERO:

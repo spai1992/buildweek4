@@ -1,13 +1,20 @@
 package Application.Data;
 
+import java.time.LocalDate;
+
 public class Utente extends BaseEntity{
     private String nome;
     private String cognome;
-    private Tessera tessera;
+    private int numeroTessera;
+    private LocalDate creazioneTessera;
+    private LocalDate scadenzaTessera;
 
-    public Utente(String nome, String cognome) {
+    public Utente(String nome, String cognome, int numeroTessera, LocalDate creazioneTessera) {
         this.nome = nome;
         this.cognome = cognome;
+        this.numeroTessera = numeroTessera;
+        this.creazioneTessera = creazioneTessera;
+        scadenzaTessera = creazioneTessera.plusDays(365);
     }
 
     public Utente(){}
@@ -28,12 +35,28 @@ public class Utente extends BaseEntity{
         this.cognome = cognome;
     }
 
-    public Tessera getTessera() {
-        return tessera;
+    public int getNumeroTessera() {
+        return numeroTessera;
     }
 
-    public void setTessera(Tessera tessera) {
-        this.tessera = tessera;
+    public void setNumeroTessera(int numeroTessera) {
+        this.numeroTessera = numeroTessera;
+    }
+
+    public LocalDate getCreazioneTessera() {
+        return creazioneTessera;
+    }
+
+    public void setCreazioneTessera(LocalDate creazioneTessera) {
+        this.creazioneTessera = creazioneTessera;
+    }
+
+    public LocalDate getScadenzaTessera() {
+        return scadenzaTessera;
+    }
+
+    public void setScadenzaTessera(LocalDate scadenzaTessera) {
+        this.scadenzaTessera = scadenzaTessera;
     }
 
     @Override
@@ -41,7 +64,9 @@ public class Utente extends BaseEntity{
         return "Utente{" +
                 "nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
-                ", tessera=" + tessera +
+                ", numeroTessera=" + numeroTessera +
+                ", creazioneTessera=" + creazioneTessera +
+                ", scadenzaTessera=" + scadenzaTessera +
                 '}';
     }
 }

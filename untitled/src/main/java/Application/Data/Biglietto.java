@@ -6,10 +6,30 @@ import java.time.LocalDate;
 
 public class Biglietto extends TitoloDiViaggio{
     private boolean timbrato = false;
+    private LocalDate timbratura;
+    //Many to one
+    private Mezzo mezzo;
 
-    public Biglietto(LocalDate dataScadenza, Validita validita) {
-        super(dataScadenza, validita);
+    public Biglietto(LocalDate dataCreazione, Validita validita) {
+        super(dataCreazione, validita);
+    }
 
+
+
+    public LocalDate getTimbratura() {
+        return timbratura;
+    }
+
+    public void setTimbratura(LocalDate timbratura) {
+        this.timbratura = timbratura;
+    }
+
+    public Mezzo getMezzo() {
+        return mezzo;
+    }
+
+    public void setMezzo(Mezzo mezzo) {
+        this.mezzo = mezzo;
     }
 
     public Biglietto(){}

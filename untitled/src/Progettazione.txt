@@ -162,4 +162,8 @@ numeroTessera: String
 Relazioni:
 Uno-a-Molti con Abbonamento
 
+Ragionamento su timbratura biglietto sui mezzi:
+
+Quando il mezzo timbra il biglietto, il mezzo si tiene l'id del biglietto, mentre il biglietto si prenderà la data di timbratura
+
 
