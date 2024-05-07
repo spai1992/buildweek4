@@ -65,6 +65,18 @@ public class Main {
             System.out.println("Formato data non valido!");
         }
 
+        --------------------------
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Inserisci un numero intero: ");
+        String line = scanner.nextLine();
+        try {
+            int numero = Integer.parseInt(line.trim());
+            System.out.println("Il numero intero è: " + numero);
+        } catch (NumberFormatException e) {
+            System.out.println("Errore: non hai inserito un numero intero valido.");
+        }
+
         scanner.close();
     }
 }

@@ -1,9 +1,11 @@
 package Application;
 
 import Application.DAOS.Parte1DAO;
+import Application.Data.Utente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import static jakarta.persistence.Persistence.createEntityManagerFactory;
@@ -28,7 +30,7 @@ public class Main {
             switch (function){
                 case 1:
                     parte1.createTitle();
-                    
+
                     menu();
                     break;
                 case 0:

@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "utenti")
+@NamedQuery(name = "getTessera", query = "SELECT u FROM Utente u WHERE u.numeroTessera = :numero")
 public class Utente extends BaseEntity{
     private int numeroTessera;
     //assegnare random
@@ -16,9 +17,12 @@ public class Utente extends BaseEntity{
     @OneToOne(mappedBy = "utente")
     private Abbonamento abbonamento;
 
-    public Utente(String nome, String cognome, LocalDate creazioneTessera, Abbonamento abbonamento) {
+
+
+    public Utente(int numeroTessera, String nome, String cognome, LocalDate creazioneTessera, Abbonamento abbonamento) {
         this.nome = nome;
         this.cognome = cognome;
+        this.numeroTessera = numeroTessera;
         this.creazioneTessera = creazioneTessera;
         scadenzaTessera = creazioneTessera.plusDays(365);
         this.abbonamento = abbonamento;
@@ -64,6 +68,14 @@ public class Utente extends BaseEntity{
 
     public void setScadenzaTessera(LocalDate scadenzaTessera) {
         this.scadenzaTessera = scadenzaTessera;
+    }
+
+    public Abbonamento getAbbonamento() {
+        return abbonamento;
+    }
+
+    public void setAbbonamento(Abbonamento abbonamento) {
+        this.abbonamento = abbonamento;
     }
 
     @Override

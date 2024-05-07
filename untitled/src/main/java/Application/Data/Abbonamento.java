@@ -14,8 +14,12 @@ public class Abbonamento extends TitoloDiViaggio{
     @JoinColumn(name = "utente_id")
     private Utente utente;
 
-    public Abbonamento(LocalDate dataScadenza, Validita validita, PuntoVendita puntoVendita) {
-        super(dataScadenza, validita, puntoVendita);
+    public Abbonamento(LocalDate dataCreazione,  Validita validita, PuntoVendita puntoVendita) {
+        super(dataCreazione, validita, puntoVendita);
+
+    }
+    public Abbonamento(LocalDate dataCreazione, Validita validita) {
+        super(dataCreazione, validita);
 
     }
 
