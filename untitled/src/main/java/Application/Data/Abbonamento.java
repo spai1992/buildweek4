@@ -10,7 +10,8 @@ import java.time.LocalDate;
 @Table(name = "abbonamenti")
 @DiscriminatorValue("abbonamento")
 public class Abbonamento extends TitoloDiViaggio{
-    @OneToOne(mappedBy = "utente", fetch = FetchType.EAGER)
+    @OneToOne
+    @JoinColumn(name = "utente_id")
     private Utente utente;
 
     public Abbonamento(LocalDate dataScadenza, Validita validita, PuntoVendita puntoVendita) {

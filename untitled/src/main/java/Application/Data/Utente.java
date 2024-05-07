@@ -5,17 +5,15 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "utente")
+@Table(name = "utenti")
 public class Utente extends BaseEntity{
-    @Id
-    @GeneratedValue
     private int numeroTessera;
+    //assegnare random
     private String nome;
     private String cognome;
     private LocalDate creazioneTessera;
     private LocalDate scadenzaTessera;
-    @OneToOne
-    @JoinColumn(name = "abbonamento_id")
+    @OneToOne(mappedBy = "utente")
     private Abbonamento abbonamento;
 
     public Utente(String nome, String cognome, LocalDate creazioneTessera, Abbonamento abbonamento) {

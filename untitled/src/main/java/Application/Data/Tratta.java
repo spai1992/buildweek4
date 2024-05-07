@@ -1,7 +1,11 @@
 package Application.Data;
 
 import Application.Data.Enum.Tratte;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name="tratte")
 public class Tratta extends BaseEntity{
     private Tratte partenza;
     private Tratte arrivo;

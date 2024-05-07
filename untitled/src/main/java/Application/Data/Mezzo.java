@@ -3,6 +3,7 @@ package Application.Data;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,9 +15,9 @@ public abstract class Mezzo extends BaseEntity {
     private boolean inServizio;
     private LocalDate tempoManutenzione;
     private LocalDate tempoServizio;
-    @OneToMany(mappedBy = "mezzo")
-    private List<Biglietto> biglietti;
-    private List<Tratta> tratte;
+    //@OneToMany(mappedBy = "mezzo")
+    //private List<Biglietto> biglietti = new ArrayList<>();
+    //private List<Tratta> tratte = new ArrayList<>();
 
     public Mezzo(int capienza, LocalDate tempoServizio) {
         this.capienza = capienza;
