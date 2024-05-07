@@ -1,0 +1,71 @@
+package Application.DAOS;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+
+public class parte1DAO implements parte1{
+    private final EntityManagerFactory entityManagerFactory;
+
+    public parte1DAO(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+    }
+
+    @Override
+    public void createTitle() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        // Utilizza entityManager per eseguire operazioni di persistenza
+        // Ricorda di chiudere l'entityManager quando hai finito con esso
+        entityManager.close();
+    }
+
+    @Override
+    public void getSubByID() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        // Utilizza entityManager per eseguire operazioni di persistenza
+        // Ricorda di chiudere l'entityManager quando hai finito con esso
+        entityManager.close();
+    }
+
+    @Override
+    public void getTitleByDate() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        // Utilizza entityManager per eseguire operazioni di persistenza
+        // Ricorda di chiudere l'entityManager quando hai finito con esso
+        entityManager.close();
+    }
+
+    @Override
+    public void getTitleBySellpoint() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        // Utilizza entityManager per eseguire operazioni di persistenza
+        // Ricorda di chiudere l'entityManager quando hai finito con esso
+        entityManager.close();
+    }
+}
+
+--------------------------------------------------------------
+
+import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Inserisci una data (formato dd/MM/yyyy): ");
+        String dateString = scanner.nextLine();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date date = dateFormat.parse(dateString);
+            System.out.println("Data inserita: " + date);
+        } catch (ParseException e) {
+            System.out.println("Formato data non valido!");
+        }
+
+        scanner.close();
+    }
+}
+

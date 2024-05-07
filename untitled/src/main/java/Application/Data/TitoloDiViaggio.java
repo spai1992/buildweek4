@@ -37,6 +37,25 @@ public abstract class TitoloDiViaggio extends BaseEntity {
         }
     }
 
+    public TitoloDiViaggio(LocalDate dataCreazione, Validita validita) {
+        this.dataCreazione = dataCreazione;
+        this.validita = validita;
+        switch (validita){
+            case Validita.GIORNALIERO:
+                this.dataScadenza = dataCreazione.plusDays(1);
+                break;
+            case Validita.SETTIMANALE:
+                this.dataScadenza = dataCreazione.plusDays(7);
+                break;
+            case Validita.MENSILE:
+                this.dataScadenza = dataCreazione.plusDays(30);
+                break;
+            case Validita.ANNUALE:
+                this.dataScadenza = dataCreazione.plusDays(365);
+                break;
+        }
+    }
+
     public TitoloDiViaggio() {
 
     }

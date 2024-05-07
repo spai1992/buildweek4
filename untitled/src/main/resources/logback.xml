@@ -12,7 +12,7 @@
     <root level="debug">
         <appender-ref ref="STDOUT"/>
     </root>
-    <logger name="org.hibernate" level="debug">
+    <logger name="org.hibernate" level="error">
         <appender-ref ref="STDOUT"/>
     </logger>
 </configuration>

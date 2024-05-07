@@ -16,7 +16,11 @@ public class Biglietto extends TitoloDiViaggio{
     private Mezzo mezzo;
 
     public Biglietto(LocalDate dataCreazione, Validita validita, PuntoVendita puntoVendita) {
-        super(dataCreazione, validita,puntoVendita);
+        super(dataCreazione, validita, puntoVendita);
+    }
+
+    public Biglietto(LocalDate dataCreazione, Validita validita) {
+        super(dataCreazione, validita);
     }
 
 
