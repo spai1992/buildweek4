@@ -1,13 +1,13 @@
 package Application.DAOS;
 
-import Application.Data.Abbonamento;
-import Application.Data.Biglietto;
+import Application.Data.*;
 import Application.Data.Enum.Validita;
-import Application.Data.Utente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -16,8 +16,10 @@ import static jakarta.persistence.Persistence.createEntityManagerFactory;
 
 public class Parte1DAO implements Parte1 {
     private EntityManagerFactory emf = createEntityManagerFactory("postgres");
-    EntityManager em = emf.createEntityManager();
+    private EntityManager em = emf.createEntityManager();
     Scanner scanner = new Scanner(System.in);
+    private static final Logger logger = LoggerFactory.getLogger(Parte1DAO.class);
+
     public Parte1DAO(){
     }
 
@@ -59,6 +61,91 @@ public class Parte1DAO implements Parte1 {
             }
         }
 
+    }
+
+    public Biglietto createTicket(LocalDate dataCreazione, PuntoVendita puntoVendita){
+        Biglietto ticket = new Biglietto(dataCreazione, Validita.GIORNALIERO, puntoVendita);
+        logger.info("Creo il biglietto " + ticket);
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        em.persist(ticket);
+        trans.commit();
+        return ticket;
+    }
+
+    public void createSubscription(LocalDate dataCreazione, Validita validita, PuntoVendita puntoVendita, Utente utente, LocalDate dataConfronto){
+        LocalDate data = utente.getScadenzaTessera();
+        var query1 = em.createNamedQuery("isUserAbbonato", Abbonamento.class).setParameter("utente", utente);
+        if(data.isBefore(dataConfronto) && query1.getResultList().isEmpty()){
+            Abbonamento abbonamento = new Abbonamento(dataCreazione, validita, puntoVendita, utente);
+            logger.info("Creo l'abbonamento " + abbonamento);
+            EntityTransaction trans = em.getTransaction();
+            trans.begin();
+            em.persist(abbonamento);
+            trans.commit();
+        } else if (data.isBefore(dataConfronto) && !query1.getResultList().isEmpty()) {
+            logger.info("Sei già abbonata bravo");
+        } else if(data.isAfter(dataConfronto)){
+            logger.info("La tessera è scaduta, la rinnovo per un altro anno.");
+            var query2 = em.createNamedQuery("updateScadenzaTessera", Utente.class).setParameter("scadenza", dataConfronto.plusDays(365)).setParameter("numero", utente.getNumeroTessera());
+            EntityTransaction trans = em.getTransaction();
+            trans.begin();
+            query2.executeUpdate();
+            trans.commit();
+            logger.info("nuova data di scadenza: " + utente.getScadenzaTessera());
+        } else{
+            logger.info("Scaduto abbonamento, aggiorno il tuo abbonamento");
+            LocalDate dataScadenza = null;
+            switch (validita){
+                case Validita.GIORNALIERO:
+                    dataScadenza = dataConfronto.plusDays(1);
+                    break;
+                case Validita.SETTIMANALE:
+                    dataScadenza = dataConfronto.plusDays(7);
+                    break;
+                case Validita.MENSILE:
+                    dataScadenza = dataConfronto.plusDays(30);
+                    break;
+                case Validita.ANNUALE:
+                    dataScadenza = dataConfronto.plusDays(365);
+                    break;
+            }
+            var query3 = em.createNamedQuery("updateScadenzaAbbonamento", TitoloDiViaggio.class).setParameter("scadenza", dataScadenza).setParameter("abbonamentoId",query1.getSingleResult().getId());
+            EntityTransaction trans = em.getTransaction();
+            trans.begin();
+            query3.executeUpdate();
+            trans.commit();
+        }
+    }
+
+    public Utente createUser(int numeroTessera, String nome, String cognome, LocalDate creazioneTessera){
+        Utente utente = new Utente(numeroTessera, nome, cognome, creazioneTessera);
+        logger.info("Creo nuovo utente");
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        em.persist(utente);
+        trans.commit();
+        return utente;
+    }
+
+    public Rivenditore createReseller(){
+        Rivenditore rivenditore = new Rivenditore();
+        logger.info("Creo il rivenditore");
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        em.persist(rivenditore);
+        trans.commit();
+        return rivenditore;
+    }
+
+    public Distributore createDistributor(){
+        Distributore distributore = new Distributore();
+        logger.info("Creo il distributore");
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        em.persist(distributore);
+        trans.commit();
+        return distributore;
     }
 
     @Override
@@ -131,4 +218,65 @@ public class Parte1DAO implements Parte1 {
                 break;
         }
     }
-}
+
+    public Abbonamento creaAbbonamento(LocalDate dataCreazione,  Validita validita,PuntoVendita puntoVendita, Utente utente){
+        Abbonamento abbonamento = new Abbonamento(dataCreazione, validita, puntoVendita,utente);
+        logger.info("Creo l'abbonamento");
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        em.persist(abbonamento);
+        trans.commit();
+        return abbonamento;
+    }
+
+
+
+    public void aggiornaScadenza(long abbonamentoId, Validita valido) {
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        Abbonamento abbonamento = em.find(Abbonamento.class, abbonamentoId);
+        if (abbonamento == null) {
+            logger.error("Abbonamento non trovato con ID: " + abbonamento);
+        }
+            var data = abbonamento.getDataScadenza();
+            try {
+
+                if (LocalDate.now().isAfter(data)) {
+                    logger.info("scaduto" + data);
+                    em.createQuery("UPDATE Abbonamento a SET a.validita = :valido WHERE a.id = :idAbbonamento")
+                            .setParameter("valido", valido)
+                            .setParameter("idAbbonamento", abbonamento.getId())
+                            .executeUpdate();
+
+                    switch (valido){
+
+                        case Validita.SETTIMANALE:
+                            data = LocalDate.now().plusDays(7);
+                            break;
+                        case Validita.MENSILE:
+                            data = LocalDate.now().plusDays(30);
+                            break;
+
+                    }
+
+                    em.createQuery("UPDATE Abbonamento a SET a.dataScadenza = :scadenza WHERE a.id = :idAbbonamento")
+                            .setParameter("scadenza",data)
+                            .setParameter("idAbbonamento", abbonamento.getId())
+                            .executeUpdate();
+
+                    transaction.commit();
+                    em.clear();
+                    Abbonamento abbonamento1 = em.find(Abbonamento.class, abbonamentoId);
+                    logger.info("nuova scadenza: " + abbonamento1.getDataScadenza());
+                } else {
+                    logger.info("ancora valido");
+                }
+            } catch (NoResultException e) {
+                // Gestisci l'eccezione
+            } catch (Exception e) {
+                logger.error("Errore durante l'aggiornamento della scadenza dell'abbonamento.", e);
+            }
+        }
+    }
+
+

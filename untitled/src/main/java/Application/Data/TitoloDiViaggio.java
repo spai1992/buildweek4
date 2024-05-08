@@ -8,6 +8,7 @@ import java.time.LocalDate;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "titolo", discriminatorType = DiscriminatorType.STRING)
+@NamedQuery(name = "updateScadenzaAbbonamento", query = "UPDATE TitoloDiViaggio t SET t.dataScadenza = :scadenza WHERE t.id = :abbonamentoId")
 public abstract class TitoloDiViaggio extends BaseEntity {
     private LocalDate dataCreazione;
     private LocalDate dataScadenza;

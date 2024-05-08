@@ -7,6 +7,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "utenti")
 @NamedQuery(name = "getTessera", query = "SELECT u FROM Utente u WHERE u.numeroTessera = :numero")
+@NamedQuery(name = "updateScadenzaTessera", query = "UPDATE Utente u SET u.scadenzaTessera = :scadenza WHERE u.numeroTessera = :numero")
 public class Utente extends BaseEntity{
     private int numeroTessera;
     //assegnare random
@@ -22,7 +23,6 @@ public class Utente extends BaseEntity{
         this.numeroTessera = numeroTessera;
         this.creazioneTessera = creazioneTessera;
         scadenzaTessera = creazioneTessera.plusDays(365);
-//        this.abbonamento = abbonamento;
     }
 
     public Utente(){}
