@@ -14,18 +14,15 @@ public class Utente extends BaseEntity{
     private String cognome;
     private LocalDate creazioneTessera;
     private LocalDate scadenzaTessera;
-    @OneToOne(mappedBy = "utente")
-    private Abbonamento abbonamento;
 
 
-
-    public Utente(int numeroTessera, String nome, String cognome, LocalDate creazioneTessera, Abbonamento abbonamento) {
+    public Utente(int numeroTessera, String nome, String cognome, LocalDate creazioneTessera) {
         this.nome = nome;
         this.cognome = cognome;
         this.numeroTessera = numeroTessera;
         this.creazioneTessera = creazioneTessera;
         scadenzaTessera = creazioneTessera.plusDays(365);
-        this.abbonamento = abbonamento;
+//        this.abbonamento = abbonamento;
     }
 
     public Utente(){}
@@ -70,13 +67,13 @@ public class Utente extends BaseEntity{
         this.scadenzaTessera = scadenzaTessera;
     }
 
-    public Abbonamento getAbbonamento() {
-        return abbonamento;
-    }
+//    public Abbonamento getAbbonamento() {
+//        return abbonamento;
+//    }
 
-    public void setAbbonamento(Abbonamento abbonamento) {
-        this.abbonamento = abbonamento;
-    }
+//    public void setAbbonamento(Abbonamento abbonamento) {
+//        this.abbonamento = abbonamento;
+//    }
 
     @Override
     public String toString() {
