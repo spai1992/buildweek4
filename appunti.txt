@@ -81,3 +81,5 @@ public class Main {
     }
 }
 
+ID TESSERA ---- UTENTE ----- ID TITOLO DI VIAGGIO ------ abbonamento.validità
+

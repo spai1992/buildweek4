@@ -12,9 +12,13 @@ import java.util.List;
 @Table(name = "distributori")
 @DiscriminatorValue("distributore")
 public class Distributore extends PuntoVendita{
-    private boolean isActive = true;
+    private boolean isActive;
 
-    public Distributore(){}
+    public Distributore(boolean isActive){
+        this.isActive = isActive;
+    }
+
+    public Distributore(){};
 
     public boolean isActive() {
         return isActive;

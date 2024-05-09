@@ -18,13 +18,7 @@ public class Abbonamento extends TitoloDiViaggio{
 
     public Abbonamento(LocalDate dataCreazione,  Validita validita,PuntoVendita puntoVendita, Utente utente) {
         super(dataCreazione, validita, puntoVendita);
-
-    }
-
-    public Abbonamento(LocalDate dataCreazione, Validita validita, Utente utente) {
-        super(dataCreazione, validita);
         this.utente = utente;
-
     }
 
     public Abbonamento() {}
