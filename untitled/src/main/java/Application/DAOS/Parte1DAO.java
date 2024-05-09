@@ -200,6 +200,8 @@ public class Parte1DAO implements Parte1 {
         createAbbonamento( validita, utente, dateA, trans);
     }
 
+    //prova commit
+
     public void createAbbonamento(String validita, Utente utente, LocalDate dateA, EntityTransaction trans){
         switch (validita) {
             case "settimanale":
