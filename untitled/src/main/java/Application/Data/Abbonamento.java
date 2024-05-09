@@ -2,6 +2,7 @@ package Application.Data;
 
 import Application.Data.Enum.Validita;
 import jakarta.persistence.*;
+import jdk.jfr.Name;
 
 import java.time.LocalDate;
 
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @Table(name = "abbonamenti")
 @DiscriminatorValue("abbonamento")
 @NamedQuery(name = "isUserAbbonato", query = "SELECT a FROM Abbonamento a WHERE a.utente= :utente")
+
 
 public class Abbonamento extends TitoloDiViaggio{
     @OneToOne

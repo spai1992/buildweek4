@@ -189,6 +189,20 @@ public class Parte1DAO {
         }
 
     }
+
+    public void validaAbbonamento(int numeroTessera){
+        var utente = em.createNamedQuery("getTessera", Utente.class)
+                .setParameter("numero", numeroTessera)
+                .getSingleResult();
+        var abbonamento = em.createNamedQuery("isUserAbbonato", Abbonamento.class)
+                .setParameter("utente", utente)
+                .getSingleResult();
+        if(LocalDate.now().isAfter(abbonamento.getDataScadenza())){
+            logger.info("Abbonamento scaduto il " + abbonamento.getDataScadenza());
+        }else{
+            logger.info("Abbonamento valido fino al " + abbonamento.getDataScadenza());
+        }
+    }
 }
 
 

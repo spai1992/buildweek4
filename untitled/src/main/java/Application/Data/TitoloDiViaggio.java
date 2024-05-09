@@ -17,7 +17,6 @@ public abstract class TitoloDiViaggio extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "punto_vendita_id")
     private PuntoVendita puntoVendita;
- 
 
 
     public TitoloDiViaggio(LocalDate dataCreazione, Validita validita, PuntoVendita puntoVendita) {
