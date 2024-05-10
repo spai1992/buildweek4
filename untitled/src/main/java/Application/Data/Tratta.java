@@ -1,13 +1,14 @@
 package Application.Data;
 
 import Application.Data.Enum.Tratte;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="tratte")
+@NamedQuery(name="cercaTratte", query = "SELECT t FROM Tratta t WHERE t.partenza= :partenza AND t.arrivo= :arrivo")
+@NamedQuery(name="numeroVolteTratte", query = "SELECT count(t) FROM Tratta t WHERE t.partenza= :partenza AND t.arrivo= :arrivo")
+@NamedQuery(name = "mediaTempoPercorrenzaTratte", query = "SELECT AVG(t.tempoPercorrenza) FROM Tratta t WHERE t.partenza = :partenza AND t.arrivo = :arrivo")
+
 public class Tratta extends BaseEntity{
     private Tratte partenza;
     private Tratte arrivo;
@@ -17,20 +18,28 @@ public class Tratta extends BaseEntity{
     @JoinColumn(name= "mezzo_id")
     private Mezzo mezzo;
 
-    private int tempoMedio;
+    private Double tempoMedio = 0.0;
 
-    public Tratta(Tratte partenza, Tratte arrivo, int tempoPercorrenza, Mezzo mezzo, int tempoMedio) {
+    public Tratta(Tratte partenza, Tratte arrivo, int tempoPercorrenza, Mezzo mezzo) {
         this.partenza = partenza;
         this.arrivo = arrivo;
         this.tempoPercorrenza = tempoPercorrenza;
         this.mezzo = mezzo;
-        this.tempoMedio = tempoMedio;
+
     }
 
     public Tratta(Tratte partenza, Tratte arrivo, int tempoPercorrenza) {
         this.partenza = partenza;
         this.arrivo = arrivo;
         this.tempoPercorrenza = tempoPercorrenza;
+    }
+
+    public Double getTempoMedio() {
+        return tempoMedio;
+    }
+
+    public void setTempoMedio(Double tempoMedio) {
+        this.tempoMedio = tempoMedio;
     }
 
     public int getTempoPercorrenza() {

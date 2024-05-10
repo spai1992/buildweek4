@@ -39,7 +39,7 @@ public class Parte2DAO {
     }
 
 
-    public void gestisciServizio(long mezzoId){
+    public void isMezzoInServizio(long mezzoId){
         Mezzo mezzo = em.find(Mezzo.class, mezzoId);
         if(mezzo == null){
             logger.error("Il mezzo non esiste");
@@ -56,8 +56,8 @@ public class Parte2DAO {
         Biglietto biglietto = em.find(Biglietto.class, idBiglietto);
         if(biglietto == null){
             logger.error("Il biglietto non esiste");
-        } else if (biglietto.isTimbrato()) {
-            logger.error("Il biglietto è già stato vidimato");
+        } else if (biglietto.isTimbrato() || biglietto.getDataScadenza().isBefore(dataTimbratura)) {
+            logger.error("Il biglietto è già stato vidimato o è scaduto");
         } else {
             Mezzo mezzo = em.find(Mezzo.class, idMezzo);
             EntityTransaction transaction = em.getTransaction();
@@ -71,7 +71,7 @@ public class Parte2DAO {
             transaction.commit();
             em.clear();
             Biglietto biglietto1 = em.find(Biglietto.class, idBiglietto);
-            logger.info("verifica: " + biglietto1.getId());
+            logger.info("Biglietto vidimato correttamente");
         }
     }
 

@@ -26,7 +26,7 @@ public class Parte1DAO {
     public void createTicket(LocalDate dataCreazione, long idPuntoVendita) {
         if(tipoDiPuntoVendita(idPuntoVendita)){
             PuntoVendita puntoVendita = em.find(PuntoVendita.class, idPuntoVendita);
-            Biglietto ticket = new Biglietto(dataCreazione, Validita.GIORNALIERO, puntoVendita);
+            Biglietto ticket = new Biglietto(dataCreazione, Validita.ANNUALE, puntoVendita);
             logger.info("Creo il biglietto " + ticket);
             EntityTransaction trans = em.getTransaction();
             trans.begin();
@@ -60,7 +60,7 @@ public class Parte1DAO {
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
             if (LocalDate.now().isAfter(data)) {
-                logger.info("scaduto" + data);
+                logger.info("Scaduto in data " + data);
                 em.createQuery("UPDATE Abbonamento a SET a.validita = :valido WHERE a.id = :idAbbonamento")
                         .setParameter("valido", valido)
                         .setParameter("idAbbonamento", abbonamento.getId())
@@ -74,7 +74,6 @@ public class Parte1DAO {
                     case Validita.MENSILE:
                         data = LocalDate.now().plusDays(30);
                         break;
-
                 }
 
                 em.createQuery("UPDATE Abbonamento a SET a.dataScadenza = :scadenza WHERE a.id = :idAbbonamento")
@@ -85,9 +84,9 @@ public class Parte1DAO {
                 transaction.commit();
                 em.clear();
                 Abbonamento abbonamento1 = em.find(Abbonamento.class, abbonamentoId);
-                logger.info("nuova scadenza: " + abbonamento1.getDataScadenza());
+                logger.info("Nuova scadenza: " + abbonamento1.getDataScadenza());
             } else {
-                logger.info("ancora valido");
+                logger.info("Abbonamento ancora valido");
             }
         } catch (NoResultException e) {
             // Gestisci l'eccezione
@@ -203,7 +202,7 @@ public class Parte1DAO {
 
     }
 
-    public void validaAbbonamento(int numeroTessera){
+    public void isAbbonamentoValido(int numeroTessera){
         var utente = em.createNamedQuery("getTessera", Utente.class)
                 .setParameter("numero", numeroTessera)
                 .getSingleResult();

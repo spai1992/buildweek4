@@ -18,6 +18,13 @@ public abstract class Mezzo extends BaseEntity {
     @OneToMany(mappedBy = "mezzo")
     private List<Tratta> tratte = new ArrayList<>();
 
+    public Mezzo(boolean inServizio, LocalDate dataInizioServizio, LocalDate tempoManutenzione, LocalDate tempoServizio, List<Tratta> tratte) {
+        this.inServizio = inServizio;
+        this.dataInizioServizio = dataInizioServizio;
+        this.tempoManutenzione = tempoManutenzione;
+        this.tempoServizio = tempoServizio;
+        this.tratte = tratte;
+    }
 
     public Mezzo(boolean inServizio, LocalDate dataInizioServizio, LocalDate tempoServizioManutenzione) {
         this.inServizio = inServizio;
