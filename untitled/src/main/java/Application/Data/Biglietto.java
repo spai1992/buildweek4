@@ -8,6 +8,8 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "biglietti")
 @DiscriminatorValue("biglietto")
+@NamedQuery(name = "contaBigliettiTimbrati", query = "SELECT count(b) FROM Biglietto b WHERE b.mezzo= :mezzoId AND b.timbrato = true")
+@NamedQuery(name = "contaBigliettiTimbratiPeriodo", query = "SELECT count(b) FROM Biglietto b WHERE b.mezzo= :mezzoId AND b.timbrato = true AND b.timbratura BETWEEN :dataInizio and :dataFine")
 public class Biglietto extends TitoloDiViaggio{
     private boolean timbrato = false;
     private LocalDate timbratura;

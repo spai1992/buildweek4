@@ -1,17 +1,17 @@
 package Application.Data;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
 import java.time.LocalDate;
 
+@Entity
+@DiscriminatorValue("tram")
 public class Tram extends Mezzo{
+    private int capienza= 70;
 
-
-    public Tram(int capienza, LocalDate tempoServizio) {
-        super(capienza = 70, tempoServizio);
-
-    }
-
-    public Tram(int capienza, boolean inServizio, LocalDate tempoManutenzione) {
-        super(capienza = 70, inServizio, tempoManutenzione);
+    public Tram( boolean inServizio, LocalDate tempoManutenzione,  LocalDate dataInizioServizio) {
+        super( inServizio, dataInizioServizio, tempoManutenzione);
 
     }
 
