@@ -9,7 +9,8 @@ import java.time.LocalDate;
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "titolo", discriminatorType = DiscriminatorType.STRING)
 @NamedQuery(name = "updateScadenzaAbbonamento", query = "UPDATE TitoloDiViaggio t SET t.dataScadenza = :scadenza WHERE t.id = :abbonamentoId")
-@NamedQuery(name = "getTitoliByDate", query = "SELECT count(t) FROM TitoloDiViaggio t WHERE t.dataCreazione BETWEEN :dataInizio and :dataFine")
+@NamedQuery(name = "getTitoliByDate", query = "SELECT count(t) FROM TitoloDiViaggio t WHERE t.puntoVendita = :puntoVendita AND t.dataCreazione BETWEEN :dataInizio and :dataFine")
+@NamedQuery(name = "getTitoli", query = "SELECT count(t) FROM TitoloDiViaggio t WHERE t.puntoVendita = :puntoVendita")
 public abstract class TitoloDiViaggio extends BaseEntity {
     private LocalDate dataCreazione;
     private LocalDate dataScadenza;

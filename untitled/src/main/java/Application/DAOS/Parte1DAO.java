@@ -155,6 +155,18 @@ public class Parte1DAO {
         }
     }
 
+    public void contaTitoli(long idPuntoVendita){
+        PuntoVendita puntoVendita = em.find(PuntoVendita.class, idPuntoVendita);
+        if (puntoVendita == null) {
+            logger.error("Punto vendita non trovato con ID: " + idPuntoVendita);
+        } else {
+            var query = em.createNamedQuery("getTitoli", Long.class)
+                    .setParameter("puntoVendita", puntoVendita);
+            Long numeroTitoli = (Long) query.getSingleResult();
+            logger.info("Titoli generati dal punto vendita con ID " + idPuntoVendita + ": " + numeroTitoli);
+        }
+    }
+
     public void contaTitoliPeriodo(long idPuntoVendita, LocalDate dataInizio, LocalDate dataFine){
         PuntoVendita puntoVendita = em.find(PuntoVendita.class, idPuntoVendita);
         if (puntoVendita == null) {
@@ -162,10 +174,11 @@ public class Parte1DAO {
         } else {
             var query = em.createNamedQuery("getTitoliByDate", Long.class)
                     .setParameter("dataInizio", dataInizio)
-                    .setParameter("dataFine", dataFine);
-            Long numeroTitoli1 = (Long) query.getSingleResult();
+                    .setParameter("dataFine", dataFine)
+                    .setParameter("puntoVendita", puntoVendita);
+            Long numeroTitoli = (Long) query.getSingleResult();
 
-            logger.info("Titoli generati dal punto vendita con ID " + idPuntoVendita + ": " + numeroTitoli1);
+            logger.info("Titoli generati dal punto vendita con ID " + idPuntoVendita + ": " + numeroTitoli);
         }
     }
 

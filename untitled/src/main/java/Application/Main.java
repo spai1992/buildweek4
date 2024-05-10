@@ -17,7 +17,7 @@ public class Main {
     public static void main(String[] args) {
         Parte1DAO parte1 = new Parte1DAO();
         Parte2DAO parte2 = new Parte2DAO();
-//            parte1.createUser(2, "paolo", "rossi", LocalDate.now());
+//            parte1.createUser(3, "luca", "di pietro", LocalDate.now());
 //         parte1.creaAbbonamento(LocalDate.now(),Validita.MENSILE,1552, 1802);
 //        Abbonamento abbonamento1 = parte1.creaAbbonamento(LocalDate.of(2023,04,05),Validita.MENSILE,rivenditore,utente1);
 
@@ -30,7 +30,8 @@ public class Main {
 //        parte1.creaAbbonamento(LocalDate.of(2023, 03,01), Validita.MENSILE, 1552, 402);
 //        parte1.createTicket(LocalDate.now(), 1552);
 //        parte1.createTicket(LocalDate.now(), 1552);
-//        parte1.contaTitoliPeriodo(1552, LocalDate.of(2024, 05,01), LocalDate.now());
+//        parte1.contaTitoliPeriodo(1552, LocalDate.of(2022, 05,01), LocalDate.now());
+        parte1.contaTitoli(1552);
 //        parte1.validaAbbonamento(1);
 
         //parte2.creaBus(true, LocalDate.of(2023,1,4), LocalDate.now());
@@ -39,7 +40,7 @@ public class Main {
         //parte2.creaTram(true,LocalDate.of(2023,3,2),LocalDate.now());
         //parte2.vidimaBiglietto(2302,202,LocalDate.of(2024,5,1));
         //parte2.contaTimbri(202);
-        parte2.contaTimbriPeriodo(202, LocalDate.of(2024,5,1),LocalDate.now());
+//        parte2.contaTimbriPeriodo(202, LocalDate.of(2024,5,1),LocalDate.now());
 
     }
 

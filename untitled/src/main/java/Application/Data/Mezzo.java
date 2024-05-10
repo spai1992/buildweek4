@@ -15,9 +15,8 @@ public abstract class Mezzo extends BaseEntity {
     private LocalDate dataInizioServizio;
     private LocalDate tempoManutenzione;
     private LocalDate tempoServizio;
-    //@OneToMany(mappedBy = "mezzo")
-    //private List<Biglietto> biglietti = new ArrayList<>();
-    //private List<Tratta> tratte = new ArrayList<>();
+    @OneToMany(mappedBy = "mezzo")
+    private List<Tratta> tratte = new ArrayList<>();
 
 
     public Mezzo(boolean inServizio, LocalDate dataInizioServizio, LocalDate tempoServizioManutenzione) {

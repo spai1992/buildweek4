@@ -2,6 +2,8 @@ package Application.Data;
 
 import Application.Data.Enum.Tratte;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -10,6 +12,20 @@ public class Tratta extends BaseEntity{
     private Tratte partenza;
     private Tratte arrivo;
     private int tempoPercorrenza;
+
+    @ManyToOne
+    @JoinColumn(name= "mezzo_id")
+    private Mezzo mezzo;
+
+    private int tempoMedio;
+
+    public Tratta(Tratte partenza, Tratte arrivo, int tempoPercorrenza, Mezzo mezzo, int tempoMedio) {
+        this.partenza = partenza;
+        this.arrivo = arrivo;
+        this.tempoPercorrenza = tempoPercorrenza;
+        this.mezzo = mezzo;
+        this.tempoMedio = tempoMedio;
+    }
 
     public Tratta(Tratte partenza, Tratte arrivo, int tempoPercorrenza) {
         this.partenza = partenza;
